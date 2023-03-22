@@ -586,7 +586,10 @@ def load_image(self, index):
     if img is None:  # not cached
         path = self.img_files[index]
         img = cv2.imread(path)  # BGR
-        assert img is not None, 'Image Not Found ' + path
+        #assert img is not None, 'Image Not Found ' + path
+        if img is None:
+            return None, None, None
+
         h0, w0 = img.shape[:2]  # orig hw
         r = self.img_size / max(h0, w0)  # resize image to img_size
         if r != 1:  # always resize down, only resize up if training with augmentation
@@ -626,6 +629,8 @@ def load_mosaic(self, index):
     for i, index in enumerate(indices):
         # Load image
         img, _, (h, w) = load_image(self, index)
+        if img is None:
+            continue
 
         # place img in img4
         if i == 0:  # top left
