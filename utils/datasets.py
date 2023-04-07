@@ -628,7 +628,12 @@ def load_mosaic(self, index):
     indices = [index] + [self.indices[random.randint(0, self.n - 1)] for _ in range(3)]  # 3 additional image indices
     for i, index in enumerate(indices):
         # Load image
-        img, _, (h, w) = load_image(self, index)
+        img  = None
+        try:
+            img, _, (h, w) = load_image(self, index)
+        except:
+            pass
+
         if img is None:
             continue
 
