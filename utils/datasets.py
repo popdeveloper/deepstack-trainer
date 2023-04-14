@@ -634,7 +634,7 @@ def load_mosaic(self, index):
         except:
             pass
 
-        if img is None:
+        if img is None or img4 is None:
             continue
 
         # place img in img4
@@ -685,7 +685,7 @@ def load_mosaic(self, index):
         lastimg = img4
     except:
         img4= lastimg
-        
+
     return img4, labels4
 
 
