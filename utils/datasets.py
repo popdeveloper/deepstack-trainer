@@ -673,14 +673,19 @@ def load_mosaic(self, index):
         # img4, labels4 = replicate(img4, labels4)  # replicate
 
     # Augment
-    img4, labels4 = random_perspective(img4, labels4,
+    lastimg = None
+    try:
+        img4, labels4 = random_perspective(img4, labels4,
                                        degrees=self.hyp['degrees'],
                                        translate=self.hyp['translate'],
                                        scale=self.hyp['scale'],
                                        shear=self.hyp['shear'],
                                        perspective=self.hyp['perspective'],
                                        border=self.mosaic_border)  # border to remove
-
+        lastimg = img4
+    except:
+        img4= lastimg
+        
     return img4, labels4
 
 
