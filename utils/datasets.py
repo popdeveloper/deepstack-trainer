@@ -536,7 +536,10 @@ class LoadImagesAndLabels(Dataset):  # for training/testing
                                                  perspective=hyp['perspective'])
 
             # Augment colorspace
-            augment_hsv(img, hgain=hyp['hsv_h'], sgain=hyp['hsv_s'], vgain=hyp['hsv_v'])
+            try:
+                augment_hsv(img, hgain=hyp['hsv_h'], sgain=hyp['hsv_s'], vgain=hyp['hsv_v'])
+            except:
+                pass
 
             # Apply cutouts
             # if random.random() < 0.9:
@@ -602,6 +605,7 @@ def load_image(self, index):
 
 def augment_hsv(img, hgain=0.5, sgain=0.5, vgain=0.5):
     r = np.random.uniform(-1, 1, 3) * [hgain, sgain, vgain] + 1  # random gains
+    
     hue, sat, val = cv2.split(cv2.cvtColor(img, cv2.COLOR_BGR2HSV))
     dtype = img.dtype  # uint8
 
